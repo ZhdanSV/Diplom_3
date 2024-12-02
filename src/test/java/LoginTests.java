@@ -22,7 +22,6 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 @RunWith(Parameterized.class)
 public class LoginTests {
 
-    private static final Logger log = LoggerFactory.getLogger(LoginTests.class);
     private WebDriver webDriver;
     private final String name;
     private final String email;
@@ -47,7 +46,7 @@ public class LoginTests {
     public static Object[][] data() {
         return new Object[][] {
                 {"chrome"},
-                {"fireFox"}
+                {"yandex"}
         };
     }
 

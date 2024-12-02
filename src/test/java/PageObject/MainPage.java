@@ -15,9 +15,10 @@ public class MainPage {
     private By constructorButton;
     private final By loginButton = By.xpath(".//button[text()='Войти в аккаунт']");
     private final By placeOrderButton = By.xpath(".//button[text() = 'Оформить заказ']");
-    private final By personalAccountButton = By.xpath(".//p[text()='Личный Кабинет']");
+    private final By personalAccountButton = By.xpath(".//a[@href='/account']");
     private final By logotype = By.xpath(".//a[@class='active']");
     private final By bunSection = By.xpath(".//span[text()='Булки']");
+    private final By element = By.xpath(".//div[@class='Modal_modal_overlay__x2ZCr']");
     private By souseSection;
     private By fillingsSection;
 
@@ -26,8 +27,8 @@ public class MainPage {
     }
 
     public void waitForLoadingPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(bunSection));
+        new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.elementToBeClickable(personalAccountButton));
     }
 
 
@@ -37,6 +38,11 @@ public class MainPage {
 
     public void clickPersonalAccountButton() {
         driver.findElement(personalAccountButton).click();
+    }
+
+    public void waitInvisibilityOfElement() {
+        new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until(ExpectedConditions.invisibilityOfElementLocated(element));
     }
 
     public void clickLogotype() {

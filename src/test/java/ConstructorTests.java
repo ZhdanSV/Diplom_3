@@ -15,8 +15,7 @@ public class ConstructorTests {
     public static Object[][] data() {
         return new Object[][] {
                 {"chrome"},
-                {"fireFox"},
-                {"IE"}
+                {"yandex"}
         };
     }
 

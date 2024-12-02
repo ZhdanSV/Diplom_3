@@ -48,9 +48,11 @@ public class LoginPage {
                 .until(ExpectedConditions.elementToBeClickable(loginButton));
     }
 
+
     public void login(String email, String password) {
         inputEmail(email);
         inputPassword(password);
+        waitForLoadingPage();
         clickLoginButton();
     }
 }
