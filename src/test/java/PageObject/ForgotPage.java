@@ -13,7 +13,6 @@ https://stellarburgers.nomoreparties.site/forgot-password
 public class ForgotPage {
     private final By recoverButton = By.xpath(".//button[text() = 'Восстановить']");
     private final By loginButton = By.xpath(".//a[text()='Войти']");
-    private final By emailField = By.xpath(".//input");
     private final WebDriver driver;
 
     public ForgotPage(WebDriver driver) {

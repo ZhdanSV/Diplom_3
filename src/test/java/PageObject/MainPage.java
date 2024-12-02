@@ -11,16 +11,15 @@ import java.time.Duration;
 https://stellarburgers.nomoreparties.site/
  */
 public class MainPage {
-    WebDriver driver;
-    private By constructorButton;
+    private final WebDriver driver;
     private final By loginButton = By.xpath(".//button[text()='Войти в аккаунт']");
-    private final By placeOrderButton = By.xpath(".//button[text() = 'Оформить заказ']");
     private final By personalAccountButton = By.xpath(".//a[@href='/account']");
-    private final By logotype = By.xpath(".//a[@class='active']");
     private final By bunSection = By.xpath(".//span[text()='Булки']");
-    private final By element = By.xpath(".//div[@class='Modal_modal_overlay__x2ZCr']");
-    private By souseSection;
-    private By fillingsSection;
+    private final By souseSection = By.xpath(".//span[text()='Соусы']");
+    private final By fillingsSection = By.xpath(".//span[text()='Начинки']");
+    private final By bunsField = By.xpath(".//h2[text()='Булки']");
+    private final By souseField = By.xpath(".//h2[text()='Соусы']");
+    private final By fillingsField = By.xpath(".//h2[text()='Начинки']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -31,6 +30,32 @@ public class MainPage {
                 .until(ExpectedConditions.elementToBeClickable(personalAccountButton));
     }
 
+    public void waitForScrollingSection(String section) {
+        switch (section) {
+            case "bun":
+                new WebDriverWait(driver, Duration.ofSeconds(5))
+                        .until(ExpectedConditions.visibilityOfElementLocated(bunsField));
+            case "souse":
+                new WebDriverWait(driver, Duration.ofSeconds(5))
+                        .until(ExpectedConditions.visibilityOfElementLocated(souseField));
+            case "fillings":
+            default:
+                new WebDriverWait(driver, Duration.ofSeconds(5))
+                        .until(ExpectedConditions.visibilityOfElementLocated(fillingsField));
+        }
+    }
+
+    public  void clickBunSection() {
+        driver.findElement(bunSection).click();
+    }
+
+    public  void clickSouseSection() {
+        driver.findElement(souseSection).click();
+    }
+
+    public  void clickFillingsSection() {
+        driver.findElement(fillingsSection).click();
+    }
 
     public void clickLoginButton() {
         driver.findElement(loginButton).click();
@@ -39,15 +64,4 @@ public class MainPage {
     public void clickPersonalAccountButton() {
         driver.findElement(personalAccountButton).click();
     }
-
-    public void waitInvisibilityOfElement() {
-        new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.invisibilityOfElementLocated(element));
-    }
-
-    public void clickLogotype() {
-        driver.findElement(logotype).click();
-    }
-
-
 }

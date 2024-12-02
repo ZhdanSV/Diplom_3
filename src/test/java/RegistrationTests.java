@@ -35,7 +35,7 @@ public class RegistrationTests {
     public static Object[][] data() {
         return new Object[][] {
                 {"chrome"},
-                {"fireFox"}
+                {"yandex"}
         };
     }
 

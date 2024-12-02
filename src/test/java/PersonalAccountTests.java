@@ -97,12 +97,17 @@ public class PersonalAccountTests {
         objMainPage.waitForLoadingPage();
     }
 
+    @Step("click exit button")
+    public void clickExitButton() {
+        objAccountPage.clickExitButton();
+        objMainPage.waitForLoadingPage();
+    }
+
     @Test
     @DisplayName("Going to Personal account")
     public void goingToPersonalAccount() {
         clickLoginButtonOnMainPage();
         login(email, password);
-        objMainPage.waitInvisibilityOfElement();
         clickPersonalAccountOnMainPage();
     }
 
@@ -111,7 +116,6 @@ public class PersonalAccountTests {
     public void goingToConstructorByClickConstructor() {
         clickLoginButtonOnMainPage();
         login(email, password);
-        objMainPage.waitInvisibilityOfElement();
         clickPersonalAccountOnMainPage();
         clickConstructor();
     }
@@ -125,7 +129,14 @@ public class PersonalAccountTests {
         clickLogotype();
     }
 
-
+    @Test
+    @DisplayName("Exit from account")
+    public void exitFromAccount() {
+        clickLoginButtonOnMainPage();
+        login(email, password);
+        clickPersonalAccountOnMainPage();
+        clickExitButton();
+    }
 
     @After
     public void tearDown() {
