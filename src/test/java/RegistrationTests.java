@@ -48,7 +48,6 @@ public class RegistrationTests {
         objRegistrationPage.waitForLoadingPage();
     }
 
-
     @Step("input fields and click registration button")
     public void registration(String email, String name, String password) {
         objRegistrationPage.registration(email, name, password);

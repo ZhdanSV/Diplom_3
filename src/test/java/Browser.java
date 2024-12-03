@@ -7,9 +7,8 @@ public class Browser {
     public static WebDriver getWebDriver(String browserName) {
         switch (browserName) {
             case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-                return new ChromeDriver(chromeOptions);
+
+                return createChromeDriver();
             case "yandex":
                 default:
                     return createYandexDriver();
@@ -24,5 +23,16 @@ public class Browser {
         options.setBinary(System.getenv("YANDEX_BROWSER_PATH"));
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         return new ChromeDriver(options);
+    }
+
+    private static WebDriver createChromeDriver() {
+        System.setProperty("webdriver.chrome.driver",
+                String.format("%s/%s", System.getenv("CHROMEWEBDRIVERS"),
+                        System.getenv("CHROME_BROWSER_DRIVER_FILENAME")));
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        chromeOptions.setBinary(System.getenv("CHROME_BROWSER_PATH"));
+
+        return new ChromeDriver(chromeOptions);
     }
 }

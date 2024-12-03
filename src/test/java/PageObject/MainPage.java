@@ -13,13 +13,14 @@ https://stellarburgers.nomoreparties.site/
 public class MainPage {
     private final WebDriver driver;
     private final By loginButton = By.xpath(".//button[text()='Войти в аккаунт']");
-    private final By personalAccountButton = By.xpath(".//a[@href='/account']");
+    private final By personalAccountButton = By.xpath(".//nav/a[@class='AppHeader_header__link__3D_hX']");
     private final By bunSection = By.xpath(".//span[text()='Булки']");
     private final By souseSection = By.xpath(".//span[text()='Соусы']");
     private final By fillingsSection = By.xpath(".//span[text()='Начинки']");
     private final By bunsField = By.xpath(".//h2[text()='Булки']");
     private final By souseField = By.xpath(".//h2[text()='Соусы']");
     private final By fillingsField = By.xpath(".//h2[text()='Начинки']");
+    private final By loadingImage = By.xpath(".//img[@class='Modal_modal__loading__3534A']");
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -27,7 +28,9 @@ public class MainPage {
 
     public void waitForLoadingPage() {
         new WebDriverWait(driver, Duration.ofSeconds(15))
-                .until(ExpectedConditions.elementToBeClickable(personalAccountButton));
+                .until(ExpectedConditions.visibilityOfElementLocated(personalAccountButton));
+        new WebDriverWait(driver, Duration.ofSeconds(15))
+                .until((ExpectedConditions.invisibilityOfElementLocated(loadingImage)));
     }
 
     public void waitForScrollingSection(String section) {
@@ -63,5 +66,9 @@ public class MainPage {
 
     public void clickPersonalAccountButton() {
         driver.findElement(personalAccountButton).click();
+    }
+
+    public void refresh() {
+        driver.navigate().refresh();
     }
 }

@@ -19,17 +19,16 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 @RunWith(Parameterized.class)
 public class LoginTests {
 
-    private WebDriver webDriver;
+    private final WebDriver webDriver;
     private final String name;
     private final String email;
-    private String password;
+    private final String password;
     Random random = new Random();
     private RegistrationPage objRegistrationPage;
     private LoginPage objLoginPage;
     private MainPage objMainPage;
     private ForgotPage objForgotPage;
     private String authToken;
-    private String user;
 
     public LoginTests(String webDriver) {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site/";
@@ -55,9 +54,9 @@ public class LoginTests {
         objMainPage = new MainPage(webDriver);
         objForgotPage = new ForgotPage(webDriver);
         objMainPage.waitForLoadingPage();
-        user =  "{\"email\": \""+email+"\",\n" +
-                "\"password\": \""+password+"\",\n" +
-                "\"name\": \""+name+"\"}";
+        String user = "{\"email\": \"" + email + "\",\n" +
+                "\"password\": \"" + password + "\",\n" +
+                "\"name\": \"" + name + "\"}";
         authToken = given()
                 .header("Content-type", "application/json")
                 .body(user)

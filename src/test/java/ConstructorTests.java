@@ -59,13 +59,13 @@ public class ConstructorTests {
     }
 
     @Test
-    @DisplayName("Check going to Buns")
+    @DisplayName("Check going to Souse")
     public void goingToSouse() {
         clickSouseSection();
     }
 
     @Test
-    @DisplayName("Check going to Buns")
+    @DisplayName("Check going to Fillings")
     public void goingToFillings() {
         clickFillingsSection();
     }
