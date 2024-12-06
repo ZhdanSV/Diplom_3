@@ -1,34 +1,24 @@
-import PageObject.MainPage;
+import pageobject.MainPage;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
-@RunWith(Parameterized.class)
-public class ConstructorTests {
+
+public class ConstructorTests extends BaseURIAndAPIs {
 
     private final WebDriver webDriver;
     private MainPage objMainPage;
 
-    public ConstructorTests(String webDriver) {
-        this.webDriver = Browser.getWebDriver(webDriver);
-    }
-
-    @Parameterized.Parameters
-    public static Object[][] data() {
-        return new Object[][] {
-                {"chrome"},
-                {"yandex"}
-        };
+    public ConstructorTests() {
+        this.webDriver = GetBrowser.getWebDriver();
     }
 
     @Before
     public void setUp() {
-        webDriver.get("https://stellarburgers.nomoreparties.site");
+        webDriver.get(MAIN_PAGE);
         objMainPage = new MainPage(webDriver);
         objMainPage.waitForLoadingPage();
     }
@@ -54,7 +44,7 @@ public class ConstructorTests {
     @Test
     @DisplayName("Check going to Buns")
     public void goingToBuns() {
-        clickFillingsSection();
+        clickSouseSection();
         clickBunSection();
     }
 

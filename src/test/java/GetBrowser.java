@@ -3,11 +3,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 
-public class Browser {
-    public static WebDriver getWebDriver(String browserName) {
-        switch (browserName) {
+public class GetBrowser {
+    public static WebDriver getWebDriver() {
+        String browser = System.getProperty("browser");
+        if (browser == null) {
+            return createChromeDriver();
+        }
+        switch (browser) {
             case "chrome":
-
                 return createChromeDriver();
             case "yandex":
                 default:

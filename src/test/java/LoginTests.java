@@ -1,25 +1,19 @@
-import PageObject.ForgotPage;
-import PageObject.LoginPage;
-import PageObject.MainPage;
-import PageObject.RegistrationPage;
+import pageobject.ForgotPage;
+import pageobject.LoginPage;
+import pageobject.MainPage;
+import pageobject.RegistrationPage;
 import io.qameta.allure.Step;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.RestAssured;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import java.util.Random;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
-@RunWith(Parameterized.class)
-public class LoginTests {
+public class LoginTests extends BaseURIAndAPIs {
 
-    private final WebDriver webDriver;
+    private WebDriver webDriver;
     private final String name;
     private final String email;
     private final String password;
@@ -29,45 +23,27 @@ public class LoginTests {
     private MainPage objMainPage;
     private ForgotPage objForgotPage;
     private String authToken;
+    private UserData user;
 
-    public LoginTests(String webDriver) {
-        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site/";
-        this.webDriver = Browser.getWebDriver(webDriver);
+
+    public LoginTests() {
+        webDriver = GetBrowser.getWebDriver();
         name = "Naruto";
         email = "tester"+random.nextInt(10000)+ "@yandex.ru";
         password = "123456";
     }
 
-    @Parameterized.Parameters
-    public static Object[][] data() {
-        return new Object[][] {
-                {"chrome"},
-                {"yandex"}
-        };
-    }
 
     @Before
     public void setUp() {
-        webDriver.get("https://stellarburgers.nomoreparties.site");
+        webDriver.get(MAIN_PAGE);
         objRegistrationPage = new RegistrationPage(webDriver);
         objLoginPage = new LoginPage(webDriver);
         objMainPage = new MainPage(webDriver);
         objForgotPage = new ForgotPage(webDriver);
         objMainPage.waitForLoadingPage();
-        String user = "{\"email\": \"" + email + "\",\n" +
-                "\"password\": \"" + password + "\",\n" +
-                "\"name\": \"" + name + "\"}";
-        authToken = given()
-                .header("Content-type", "application/json")
-                .body(user)
-                .post("/api/auth/register")
-                .then()
-                .statusCode(200)
-                .body("success", notNullValue())
-                .extract()
-                .path("accessToken")
-                .toString()
-                .replace("Bearer ", "");
+        user = new UserData(email, password, name);
+        authToken = registerAndGetToken(user);
     }
 
     @Step("Click login button on main page")
@@ -100,13 +76,13 @@ public class LoginTests {
         objLoginPage.waitForLoadingPage();
     }
 
-    @Step
+    @Step("click Registration on login page")
     public void clickRegistrationOnLoginPage() {
         objLoginPage.clickRegistrationButton();
         objRegistrationPage.waitForLoadingPage();
     }
 
-    @Step
+    @Step("click Forgot on login page")
     public void clickForgotOnLoginPage() {
         objLoginPage.clickForgotButton();
         objForgotPage.waitForLoadingPage();
@@ -148,15 +124,8 @@ public class LoginTests {
     @After
     public void tearDown() {
         webDriver.quit();
-        try {
-            given()
-                    .header("Content-type", "application/json")
-                    .auth().oauth2(authToken)
-                    .delete("/api/auth/user")
-                    .then()
-                    .statusCode(202);
-        } catch (IllegalArgumentException illegalArgumentException) {
-            return;
+        if (authToken!=null) {
+            deleteUser(authToken);
         }
     }
 

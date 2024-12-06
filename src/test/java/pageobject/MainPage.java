@@ -1,5 +1,6 @@
-package PageObject;
+package pageobject;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,13 +15,14 @@ public class MainPage {
     private final WebDriver driver;
     private final By loginButton = By.xpath(".//button[text()='Войти в аккаунт']");
     private final By personalAccountButton = By.xpath(".//nav/a[@class='AppHeader_header__link__3D_hX']");
-    private final By bunSection = By.xpath(".//span[text()='Булки']");
-    private final By souseSection = By.xpath(".//span[text()='Соусы']");
-    private final By fillingsSection = By.xpath(".//span[text()='Начинки']");
+    private final By bunSection = By.xpath(".//span[text()='Булки']/parent::div");
+    private final By souseSection = By.xpath(".//span[text()='Соусы']/parent::div");
+    private final By fillingsSection = By.xpath(".//span[text()='Начинки']/parent::div");
     private final By bunsField = By.xpath(".//h2[text()='Булки']");
     private final By souseField = By.xpath(".//h2[text()='Соусы']");
     private final By fillingsField = By.xpath(".//h2[text()='Начинки']");
     private final By loadingImage = By.xpath(".//img[@class='Modal_modal__loading__3534A']");
+    private final String EXPECTED_CONDITION = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -37,14 +39,16 @@ public class MainPage {
         switch (section) {
             case "bun":
                 new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOfElementLocated(bunsField));
+                        .until(ExpectedConditions.attributeToBe(bunSection, "class", EXPECTED_CONDITION));
+                break;
             case "souse":
                 new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOfElementLocated(souseField));
+                        .until(ExpectedConditions.attributeToBe(souseSection, "class", EXPECTED_CONDITION));
+                break;
             case "fillings":
-            default:
                 new WebDriverWait(driver, Duration.ofSeconds(5))
-                        .until(ExpectedConditions.visibilityOfElementLocated(fillingsField));
+                        .until(ExpectedConditions.attributeToBe(fillingsSection, "class", EXPECTED_CONDITION));
+                break;
         }
     }
 
@@ -68,7 +72,4 @@ public class MainPage {
         driver.findElement(personalAccountButton).click();
     }
 
-    public void refresh() {
-        driver.navigate().refresh();
-    }
 }
