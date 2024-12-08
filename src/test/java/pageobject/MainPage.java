@@ -18,11 +18,8 @@ public class MainPage {
     private final By bunSection = By.xpath(".//span[text()='Булки']/parent::div");
     private final By souseSection = By.xpath(".//span[text()='Соусы']/parent::div");
     private final By fillingsSection = By.xpath(".//span[text()='Начинки']/parent::div");
-    private final By bunsField = By.xpath(".//h2[text()='Булки']");
-    private final By souseField = By.xpath(".//h2[text()='Соусы']");
-    private final By fillingsField = By.xpath(".//h2[text()='Начинки']");
     private final By loadingImage = By.xpath(".//img[@class='Modal_modal__loading__3534A']");
-    private final String EXPECTED_CONDITION = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
+    private static final String EXPECTED_CONDITION = "tab_tab__1SPyG tab_tab_type_current__2BEPc pt-4 pr-10 pb-4 pl-10 noselect";
 
     public MainPage(WebDriver driver) {
         this.driver = driver;

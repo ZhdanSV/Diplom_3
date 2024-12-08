@@ -5,11 +5,11 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class BaseURIAndAPIs {
 
-    public final String MAIN_PAGE = "https://stellarburgers.nomoreparties.site";
-    public final String REGISTERATION_PAGE = "https://stellarburgers.nomoreparties.site/register";
-    private final String REGISTER_API = "/api/auth/register";
-    private final String LOGIN_API = "/api/auth/login";
-    private final String DELETE_USER_API = "/api/auth/user";
+    public static final String MAIN_PAGE = "https://stellarburgers.nomoreparties.site";
+    public static final String REGISTERATION_PAGE = "https://stellarburgers.nomoreparties.site/register";
+    private static final String REGISTER_API = "/api/auth/register";
+    private static final String LOGIN_API = "/api/auth/login";
+    private static final String DELETE_USER_API = "/api/auth/user";
 
     public BaseURIAndAPIs() {
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site/";
